@@ -13,7 +13,7 @@
 
 Name:      perl-Shell-EnvImporter
 Summary:   Shell-EnvImporter - Perl extension for importing environment variable
-Version:   0.01
+Version:   1.00
 Release:   1
 Vendor:    Postini, Inc.
 Packager:  David Faraldo <dfaraldo@cpan.org>
