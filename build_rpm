@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+die "You must be root to build the RPM\n" if ($>);
+
+my $specfile   = 'Shell-EnvImporter.spec';
+my $sourcefile = &get_sourcefile_name($specfile);
+
+print "SOURCEFILE: $sourcefile\n";
+
+system("tar -czf $sourcefile .") == 0 or die "Couldn't create $sourcefile: $!";
+
+system("rpmbuild -ba $specfile");
+
+unlink($sourcefile);
+
+
+##############################################################################
+###############################  Subroutines  ################################
+##############################################################################
+
+#########################
+sub get_sourcefile_name {
+#########################
+  my $specfile = shift;
+
+  my $tmpdir   = $ENV{'TMP'} || '/var/tmp';
+  my $tmpfile  = "$tmpdir/build_rpm.$$";
+  my $tag      = 'SOURCEFILE';
+  my $sourcefile;
+
+  open(SPEC, $specfile) or die "Couldn't open $specfile: $!";
+  open(TMP, ">$tmpfile") or die "Couldn't create $tmpfile: $!";
+  while (<SPEC>) {
+    last if (/^%prep/);
+    print TMP $_;
+  }
+  close(SPEC);
+
+  print TMP "%build\n";
+  print TMP "echo ", join(":", $tag, '%{S:0}'), "\n";
+  print TMP "exit -1\n";
+  close(TMP);
+
+  open(RPMBUILD, "rpmbuild -bc $tmpfile --short-circuit 2>/dev/null |");
+  while (<RPMBUILD>) {
+    if (/^$tag/) {
+      chomp;
+      $sourcefile = (split(/:/, $_, 2))[1];
+      last;
+    }
+  }
+  close(RPMBUILD);
+
+  unlink($tmpfile);
+
+  return $sourcefile;
+}

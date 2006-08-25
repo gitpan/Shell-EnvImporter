@@ -1,0 +1,6 @@
+Revision history for Perl extension Shell::EnvImporter.
+
+0.01  Fri Feb 25 14:02:42 2005
+	- original version; created by h2xs 1.23 with options
+		-A -X --skip-exporter --name=Shell::EnvImporter
+
