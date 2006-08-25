@@ -13,9 +13,8 @@
 
 Name:      perl-Shell-EnvImporter
 Summary:   Shell-EnvImporter - Perl extension for importing environment variable
-Version:   1.00
+Version:   1.01
 Release:   1
-Vendor:    Postini, Inc.
 Packager:  David Faraldo <dfaraldo@cpan.org>
 License:   Artistic
 Group:     Applications/CPAN
@@ -107,5 +106,5 @@ find %{buildroot}%{_prefix}             \
 %defattr(-,root,root)
 
 %changelog
-* Tue Apr 5 2005 root@rwc_dhcp-100.postinicorp.com
+* Tue Apr 5 2005 root@dhcp-101.localdomain
 - Initial build.

@@ -218,6 +218,10 @@ David Faraldo, E<lt>dfaraldo@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by Postini, Inc.  All rights reserved.
+  Copyright (C) 2005-2006 by Dave Faraldo
+
+  This library is free software; you can redistribute it and/or modify it
+  under the same terms as Perl itself.  No warranty is expressed or implied.
+
 
 =cut
