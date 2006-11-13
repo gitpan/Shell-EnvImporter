@@ -11,7 +11,7 @@ no warnings 'uninitialized';
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 734; 
+use Test::More tests => 848; 
 BEGIN { use_ok('Shell::EnvImporter') };
 
 #########################
@@ -34,7 +34,7 @@ my %scripts = (
   bash  => $sh_script,
   zsh   => $sh_script,
 
-  # ksh   => $sh_script,  # Untested, as I don't have ksh
+  ksh   => $sh_script,  # Untested, as I don't have ksh
 
   csh   => $csh_script,
   tcsh  => $csh_script,

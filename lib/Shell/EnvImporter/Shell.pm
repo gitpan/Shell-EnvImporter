@@ -4,6 +4,8 @@ use strict;
 use warnings;
 no warnings 'uninitialized';
 
+our $VERSION = '1.04';
+
 use IO::Handle;
 use IO::Select;
 use IPC::Open3;
@@ -470,11 +472,13 @@ sub env_diff {
 
   # Whatever's left in old_env was removed
   foreach my $var (keys %old_env) {
-    $self->dprint(3, "REMOVED: $var\n");
-    my $change = Shell::EnvImporter::Change->new(
-      type  => 'removed',
-    );
-    $rv->changed_set($var => $change);
+    unless ($ignore{$var}) {
+      $self->dprint(3, "REMOVED: $var\n");
+      my $change = Shell::EnvImporter::Change->new(
+        type  => 'removed',
+      );
+      $rv->changed_set($var => $change);
+    }
   }
 
 }

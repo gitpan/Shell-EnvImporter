@@ -24,9 +24,6 @@ sub init {
     %args,
   );
 
-  $self->ignore_push(qw(GROUP HOST HOSTTYPE MACHTYPE OSTYPE VENDOR));
-
-
 }
 
 

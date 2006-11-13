@@ -17,11 +17,9 @@ sub init {
   my %args = @_;
 
   $self->SUPER::init(
-    name      => 'tcsh',
+    name => 'tcsh',
     %args,
   );
-
-  $self->ignore_push(qw(GROUP HOST HOSTTYPE MACHTYPE OSTYPE VENDOR));
 
 }
 1;
