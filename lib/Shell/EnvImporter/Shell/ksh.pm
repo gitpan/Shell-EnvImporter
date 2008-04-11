@@ -17,11 +17,9 @@ sub init {
   my %args = @_;
 
   $self->SUPER::init(
-    name => 'ksh',
+    name  => 'ksh',
     %args,
   );
-
-  $self->ignore_push(qw(OLDPWD OSTYPE VENDOR MACHTYPE USERNAME));
 
 }
 

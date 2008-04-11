@@ -13,15 +13,15 @@ use Class::MethodMaker 2.0 [
 ##########
 sub init {
 ##########
-  my $self = shift;
+  my $self  = shift;
   my %args = @_;
 
   $self->SUPER::init(
-    name => 'zsh',
+    name    => 'zsh',
     %args,
   );
 
-  $self->ignore_push(qw(OLDPWD OSTYPE VENDOR MACHTYPE USERNAME));
+  $self->ignore_push(qw(OLDPWD OSTYPE VENDOR));
 
 }
 

@@ -4,8 +4,6 @@ use strict;
 use warnings;
 no warnings 'uninitialized';
 
-our $VERSION = '1.04';
-
 use IO::Handle;
 use IO::Select;
 use IPC::Open3;
@@ -254,7 +252,8 @@ sub parse_results {
 
   # Read the shell startup output
   my @shell_output;
-  while (my $line = shift(@lines)) {
+  while (@lines) {
+    my $line = shift(@lines);
     if ($line =~ /^$tag 0/) {
       $rv->shell_status(0);
       $self->dprint(4, "SHELL STATUS:  ", $rv->shell_status, "\n");
@@ -271,7 +270,8 @@ sub parse_results {
 
   # Read the env command output
   my @command_output;
-  while (my $line = shift(@lines)) {
+  while (@lines) {
+    my $line = shift(@lines);
     if ($line =~ /^$tag (\d+)/) {
       $rv->command_status($1);
       $self->dprint(4, "COMMAND STATUS:  ", $rv->command_status, "\n");
@@ -288,7 +288,8 @@ sub parse_results {
 
   # Read the environment
   my %new_env;
-  while (my $line = shift(@lines)) {
+  while (@lines) {
+    my $line = shift(@lines);
     if ($line =~ /^$tag (\d+)/) {
       $rv->env_status($1);
       $self->dprint(4, "ENV STATUS:  ", $rv->env_status, "\n");
@@ -472,13 +473,11 @@ sub env_diff {
 
   # Whatever's left in old_env was removed
   foreach my $var (keys %old_env) {
-    unless ($ignore{$var}) {
-      $self->dprint(3, "REMOVED: $var\n");
-      my $change = Shell::EnvImporter::Change->new(
-        type  => 'removed',
-      );
-      $rv->changed_set($var => $change);
-    }
+    $self->dprint(3, "REMOVED: $var\n");
+    my $change = Shell::EnvImporter::Change->new(
+      type  => 'removed',
+    );
+    $rv->changed_set($var => $change);
   }
 
 }

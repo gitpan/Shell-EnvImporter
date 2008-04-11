@@ -6,7 +6,7 @@ no warnings 'uninitialized';
 
 our @ISA = qw();
 
-our $VERSION = '1.04';
+our $VERSION = '1.05';
 
 use Shell::EnvImporter::Shell;
 

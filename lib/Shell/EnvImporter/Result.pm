@@ -4,8 +4,6 @@ use strict;
 use warnings;
 no warnings 'uninitialized';
 
-our $VERSION = '1.04';
-
 use Shell::EnvImporter::Change;
 
 use Class::MethodMaker 2.0 [

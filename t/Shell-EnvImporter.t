@@ -11,7 +11,7 @@ no warnings 'uninitialized';
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 848; 
+use Test::More tests => 744; 
 BEGIN { use_ok('Shell::EnvImporter') };
 
 #########################
@@ -34,7 +34,7 @@ my %scripts = (
   bash  => $sh_script,
   zsh   => $sh_script,
 
-  ksh   => $sh_script,  # Untested, as I don't have ksh
+  # ksh   => $sh_script,  # Untested, as I don't have ksh
 
   csh   => $csh_script,
   tcsh  => $csh_script,
@@ -713,6 +713,44 @@ foreach my $shell (sort keys %scripts) {
 
 
 
+# 6. Discovered bugs
+
+#  - Test command that produces empty lines (thanks to G. Leclair)
+{
+  my $command = q{
+    echo '*Warning*  Cycle.log files could not be used';
+    echo '';
+    echo '';
+    echo 'Setting variables for main cycle';
+    echo '/farequote/IntegrationK/OTFGenData/setPSCacheLinux was sourced';
+    echo 'succesfully for FqA database';
+  } . $sh_script;
+
+  &run_test(
+    'command that produces empty lines' => {
+      setup => sub { },
+      run => sub {
+        my $importer = Shell::EnvImporter->new(
+          shell => 'zsh',
+          command => $command,
+        );
+        return $importer;
+      },
+      cleanup => sub {},
+      modified => {
+        MOD_VAR => 1,
+      },
+      added => {
+        ADD_VAR => 1,
+      },
+      removed => {
+        DEL_VAR => undef,
+      },
+      imported => [qw(MOD_VAR ADD_VAR)],
+    },
+  );
+
+}
 
 
 ##############################################################################
@@ -762,15 +800,6 @@ sub run_test {
   # Make sure the env command executed cleanly
   ok($result->env_status == 0, "$testname -- env status")
     or diag("\t$testname\n\tEnv exit status: " . $result->env_status);
-
-
-  # Print output if it exists
-  diag("\t$testname\n\tShell output:  " . $result->shell_output) 
-    if ($result->shell_output =~ /\S/);
-  diag("\t$testname\n\tCommand output:  " . $result->command_output) 
-    if ($result->command_output =~ /\S/);
-  diag("\t$testname\n\tSTDERR:  " . $result->stderr) 
-    if ($result->stderr =~ /\S/);
 
 
   # Check that all changes were expected and correct
