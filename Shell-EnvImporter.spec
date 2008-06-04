@@ -14,7 +14,7 @@
 
 Name:      perl-Shell-EnvImporter
 Summary:   Shell-EnvImporter - 
-Version:   1.05
+Version:   1.06
 Release:   1
 Vendor:    CPAN
 Packager:  David Faraldo <dfaraldo@cpan.org>
