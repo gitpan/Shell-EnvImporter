@@ -21,7 +21,7 @@ sub init {
     %args,
   );
 
-  $self->ignore_push(qw(OLDPWD OSTYPE VENDOR));
+  $self->ignore_push(qw(OLDPWD OSTYPE USERNAME VENDOR));
 
 }
 

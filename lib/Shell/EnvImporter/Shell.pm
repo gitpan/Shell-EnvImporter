@@ -473,6 +473,7 @@ sub env_diff {
 
   # Whatever's left in old_env was removed
   foreach my $var (keys %old_env) {
+    next if ($ignore{$var});
     $self->dprint(3, "REMOVED: $var\n");
     my $change = Shell::EnvImporter::Change->new(
       type  => 'removed',
